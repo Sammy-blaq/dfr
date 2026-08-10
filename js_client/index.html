@@ -6,7 +6,7 @@
     <title>Document</title>
   </head>
   <body>
-    <form action="POST" id="login-form">
+    <form method="POST" id="login-form">
       <input type="text" name="username" placeholder="Your username" />
       <input
         type="password"
@@ -15,6 +15,12 @@
         placeholder="Your password"
       />
       <input type="submit" value="Login" />
+    </form>
+
+    <form method="POST" id="search-form">
+      <input type="text" name="q" placeholder="Your Search..." />
+
+      <input type="submit" value="Search" />
     </form>
 
     <div id="content-container"></div>
