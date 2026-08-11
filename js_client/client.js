@@ -167,3 +167,52 @@ function getProductList() {
 }
 validateJWTToken();
 // getProductList();
+
+const { liteClient: algoliasearch } = window["algoliasearch/lite"];
+
+const appID = "GBVFNYEGQT";
+const apiKey = "3c2db4aeddec6b85e25de8b7567f6d8c";
+const indexName = "cfe_Product";
+
+const searchClient = algoliasearch(appID, apiKey);
+
+const search = instantsearch({
+  indexName,
+  searchClient,
+});
+
+search.addWidgets([
+  instantsearch.widgets.searchBox({
+    container: "#searchbox",
+  }),
+
+  instantsearch.widgets.clearRefinements({
+    container: "#clear-refinements",
+  }),
+
+  instantsearch.widgets.refinementList({
+    container: "#user-list",
+    attribute: "user",
+  }),
+
+  instantsearch.widgets.refinementList({
+    container: "#public-list",
+    attribute: "public",
+  }),
+
+  instantsearch.widgets.hits({
+    container: "#hits",
+    templates: {
+      item: `
+        <div> 
+            <div>{{#helpers.highlight}}{"attribute": "title"}{{/helpers.highlight}}</div>
+            <div>{{#helpers.highlight}}{"attribute": "body"}{{/helpers.highlight}}</div>
+
+            <p>{{user}}</p> <p>\${{price}}</p>
+        </div>
+      `,
+    },
+  }),
+]);
+
+search.start();
